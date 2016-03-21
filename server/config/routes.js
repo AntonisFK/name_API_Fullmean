@@ -1,7 +1,7 @@
 var names = require('./../controllers/names.js');
 module.exports = function(app){
 
-  app.get('/namesb', function(req, res){
+  app.get('/names', function(req, res){
     names.index(req, res)
   })
 
@@ -10,12 +10,8 @@ module.exports = function(app){
     names.create(req, res)
   });
 
-  app.delete('/remove/:name', function(req, res){
+  app.delete('/names/:id', function(req, res){
     names.destroy(req, res);
-  });
-
-  app.get('/:name', function(req, res){
-    names.show(req, res)
   });
 
 }

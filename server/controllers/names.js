@@ -5,7 +5,7 @@ module.exports = (function() {
   return {
     index: function(req, res){
      Name.find({}, function(err, name){
-      res.json({name});
+      res.json(name);
     })
     },
     create: function(req, res){
@@ -17,6 +17,11 @@ module.exports = (function() {
         else{
           res.json(name);
         }
+      });
+    },
+    destroy: function(req, res){
+      Name.remove({_id: req.params.id}, function(err, results){
+        console.log("hit the destroy")
       });
     }
   }

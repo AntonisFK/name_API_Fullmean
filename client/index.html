@@ -13,17 +13,25 @@
 
       factory.index = function(callback){
 
-        $http.get('/namesb').success(function(output){
-          console.log(output);
-          console.log(names);
+        $http.get('/names').success(function(output){
+          // console.log(output);
+          // console.log(names);
           names = output; 
           callback(names);
         })
       };
       factory.create = function(info, callback){
         $http.post('/names', info).success(function(output){
+          console.log(names)
+          console.log(output)
           names.push(output)
         })
+      }
+
+      factory.delete = function(name, callback){
+        console.log(name._id + "is going to be deleted")
+        $http.delete('/names/' + name._id);
+        callback(names);
       }
       return factory; 
     })
@@ -43,6 +51,16 @@
         })
         $scope.newName = null; 
       }
+
+      $scope.delete = function(name){
+        nameFactory.delete(name, function(){
+          nameFactory.index(function (name){
+            $scope.names = name; 
+          })
+        })
+      }
+   
+
     })
 
 
@@ -64,7 +82,7 @@
       </tr>
       <tr ng-repeat ="name in names track by $index">
         <td>{{name.name}}</td>
-
+        <td><button ng-click='delete(name)'>Delete Name</button></td>
       </tr>
     </table>
 
